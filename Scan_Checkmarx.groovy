@@ -15,13 +15,13 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
 //checkmarxASTScanner additionalOptions: '', baseAuthUrl: '', branchName: '', checkmarxInstallation: 'Checkmarx', credentialsId: 'CheckmarxPOV', projectName: 'projectName', serverUrl: 'https://serverURL', tenantName: 'bcbst-prod', useOwnServerCredentials: true
     checkmarxASTScanner additionalOptions: "${scanType}--file-filter !das,!.jazz5,!tmp --report-format summaryJSON,summaryHTML,pdf --output-path ${env.loadDirectory} -s ${includeFiles} --project-groups ${costCenter} --tags BuildId:${BUILD_DISPLAY_NAME} --project-tags cc:${costCenter}", 
         useAuthenticationUrl: true,
-        baseAuthUrl: 'https://iam.checkmarx.net', 
+        baseAuthUrl: 'https://eu.iam.checkmarx.net', 
         branchName: 'NA', 
         checkmarxInstallation: 'Checkmarx', 
         credentialsId: 'cxapikey', 
         projectName: "${appName}", 
-        serverUrl: 'https://ast.checkmarx.net', 
-        tenantName: 'bcbst-prod', 
+        serverUrl: 'https://eu.ast.checkmarx.net', 
+        tenantName: 'cx_seg', 
         useOwnServerCredentials: true,
         useOwnAdditionalOptions: true
 
