@@ -19,7 +19,7 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
         branchName: 'NA', 
         checkmarxInstallation: 'Checkmarx', 
         credentialsId: 'cxapikey', 
-        projectName: "${appName}", 
+        projectName: "ANspringBootApp", 
         serverUrl: 'https://eu.ast.checkmarx.net', 
         tenantName: 'cx_seg', 
         useOwnServerCredentials: true,
