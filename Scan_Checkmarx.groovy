@@ -18,7 +18,7 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
         baseAuthUrl: 'https://iam.checkmarx.net', 
         branchName: 'NA', 
         checkmarxInstallation: 'Checkmarx', 
-        credentialsId: 'checkmarx-api-key', 
+        credentialsId: 'cxapikey', 
         projectName: "${appName}", 
         serverUrl: 'https://ast.checkmarx.net', 
         tenantName: 'bcbst-prod', 
