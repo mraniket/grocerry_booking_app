@@ -28,3 +28,5 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
     env.cxStatus = Get_Checkmarx_Data()   
     
 }
+
+return this
