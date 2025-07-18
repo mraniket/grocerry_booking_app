@@ -11,7 +11,7 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
     } else {
         includeFiles = "${env.loadDirectory}/${cmInclude}"
     }
-    def debugging = (DebugLevel() >= Debug.high())
+    // def debugging = (DebugLevel() >= Debug.high())
 //checkmarxASTScanner additionalOptions: '', baseAuthUrl: '', branchName: '', checkmarxInstallation: 'Checkmarx', credentialsId: 'CheckmarxPOV', projectName: 'projectName', serverUrl: 'https://serverURL', tenantName: 'bcbst-prod', useOwnServerCredentials: true
     checkmarxASTScanner additionalOptions: "${scanType}--file-filter !das,!.jazz5,!tmp --report-format summaryJSON,summaryHTML,pdf --output-path ${env.loadDirectory} -s ${includeFiles} --project-groups ${costCenter} --tags BuildId:${BUILD_DISPLAY_NAME} --project-tags cc:${costCenter}", 
         useAuthenticationUrl: true,
