@@ -3,7 +3,7 @@ def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmE
     def includeFiles = '**/CMX.zip'
     if (cmExclude !="") cmExclude += ","
     cmExclude += "**/das/**,**/.sonarqube/**,**/tmp/**,**/.jazz5/**"
-    scanType = (env.cxSASTOnly == "true")?"--scan-types sast ":""
+    def scanType = (env.cxSASTOnly == "true")?"--scan-types sast ":""
     def serviceAccount = (jenkinsEnvironment=="PROD")? "SI_JENKINS_P":"SI_JENKINS_T"
     if (env.cxNoZip != "true") {
         zip dir: "${env.workingDirectory}/${cxDir}" , glob:cmInclude, exclude:cmExclude, zipFile: "${env.loadDirectory}/CMX.zip", overwrite:true
