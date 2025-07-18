@@ -1,0 +1,30 @@
+def call(def appName="ESP", def costCenter="0977", def cmInclude="**/*", def cmExclude="", def cxDir="") {
+    echo "Scan_Checkmarx in ${workingDirectory}/${cxDir}"
+    def includeFiles = '**/CMX.zip'
+    if (cmExclude !="") cmExclude += ","
+    cmExclude += "**/das/**,**/.sonarqube/**,**/tmp/**,**/.jazz5/**"
+    scanType = (env.cxSASTOnly == "true")?"--scan-types sast ":""
+    def serviceAccount = (jenkinsEnvironment=="PROD")? "SI_JENKINS_P":"SI_JENKINS_T"
+    if (env.cxNoZip != "true") {
+        zip dir: "${env.workingDirectory}/${cxDir}" , glob:cmInclude, exclude:cmExclude, zipFile: "${env.loadDirectory}/CMX.zip", overwrite:true
+        includeFiles = "${env.loadDirectory}/CMX.zip"
+    } else {
+        includeFiles = "${env.loadDirectory}/${cmInclude}"
+    }
+    def debugging = (DebugLevel() >= Debug.high())
+//checkmarxASTScanner additionalOptions: '', baseAuthUrl: '', branchName: '', checkmarxInstallation: 'Checkmarx', credentialsId: 'CheckmarxPOV', projectName: 'projectName', serverUrl: 'https://serverURL', tenantName: 'bcbst-prod', useOwnServerCredentials: true
+    checkmarxASTScanner additionalOptions: "${scanType}--file-filter !das,!.jazz5,!tmp --report-format summaryJSON,summaryHTML,pdf --output-path ${env.loadDirectory} -s ${includeFiles} --project-groups ${costCenter} --tags BuildId:${BUILD_DISPLAY_NAME} --project-tags cc:${costCenter}", 
+        useAuthenticationUrl: true,
+        baseAuthUrl: 'https://iam.checkmarx.net', 
+        branchName: 'NA', 
+        checkmarxInstallation: 'Checkmarx', 
+        credentialsId: 'CheckmarxPOV', 
+        projectName: "${appName}", 
+        serverUrl: 'https://ast.checkmarx.net', 
+        tenantName: 'bcbst-prod', 
+        useOwnServerCredentials: true,
+        useOwnAdditionalOptions: true
+
+    env.cxStatus = Get_Checkmarx_Data()   
+    
+}
